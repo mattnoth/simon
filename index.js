@@ -16,6 +16,8 @@ let userChoiceArr = []
 let computerChoiceArr = []
 
 
+
+
 // counter should increment to each
 
 // Create Computer Choice
@@ -25,32 +27,22 @@ const generateComputerArr = function () {
 		computerChoiceArr.push(random)
 	}
 }
+
+
 generateComputerArr()
+
+
 console.log(computerChoiceArr)
-
-// sleep timer; will cause a delay based on ms argument 
-// const sleep = function(ms) {
-//     let startTime = new Date().getTime()
-//     while (true) { 
-//         let timeElapsed = new Date().getTime() - startTime
-//         if (timeElapsed > ms) {
-//             break;
-//         }
-//     }
-// }
-
 
 // recursion? change the computer play function to take an i as an argument; which would get rid of the for loop 
 
 const computerPlay = function (i) {
-    
-    // if (i > counter) {
-    //     return
-    // }
-    
 	if (computerChoiceArr[i] === 0) {
         console.log('yo it should b yellow')
-		yellow.classList.add('flashClass')
+        // yellow.classList.add('flashClass')
+        // yellow.setAttribute('id', 'yellow:active')
+        yellow.setAttribute('id', 'yellow')
+        yellow.setAttribute("id", 'yellow:active')
 	} else if (computerChoiceArr[i] === 1) {
         console.log('yo it should be blue')
 		blue.classList.add('flashClass')
@@ -61,7 +53,6 @@ const computerPlay = function (i) {
         console.log('Yo it should be red')
 		red.classList.add('flashClass')
     } 
-//     setTimeout(removeColor, 500)
 }
 
 const removeColor = function() {
@@ -69,53 +60,19 @@ const removeColor = function() {
 	blue.classList.remove('flashClass')
 	green.classList.remove('flashClass')
     red.classList.remove('flashClass')
-//     setTimeout(computerPlay, 500)
+    yellow.setAttribute("id", "yellow")
  }
-let counter = 10
 
-// computerPlay(0)
+
+
+let counter = 4
 
 for (i = 0; i <= counter; i++) {
 setTimeout(computerPlay, 1000 * i, i)
 setTimeout(removeColor, 1000 * i + 500)
 } 
 
-// setTimeout(computerPlay, 2000, 1)
-// setTimeout(removeColor, 2500)
-// setTimeout(computerPlay, 3000, 2)
-// setTimeout(removeColor, 3500)
 console.log('im finuto')
-
-// const computerPlay = function () {
-// 	// yellow.classList.remove('flashClass')
-// 	// blue.classList.remove('flashClass')
-// 	// green.classList.remove('flashClass')
-//     // red.classList.remove('flashClass')
-
-//     // playSound() happens here 
-    
-// 	for (i = 0; i <= counter; i++) {
-// 		if (computerChoiceArr[i] === 0) {
-//             console.log('yo it should b yellow')
-// 			yellow.classList.add('flashClass')
-// 		} else if (computerChoiceArr[i] === 1) {
-// 			console.log('yo it should be blue')
-// 			blue.classList.add('flashClass')
-// 		} else if (computerChoiceArr[i] === 2) {
-// 			console.log('yo it should be green')
-// 			green.classList.add('flashClass')
-// 		} else if (computerChoiceArr[i] === 3) {
-// 			console.log('Yo it should be red')
-// 			red.classList.add('flashClass')
-//         } 
-//         sleep(5000)
-// 	}
-// 	yellow.classList.remove('flashClass')
-// 	blue.classList.remove('flashClass')
-// 	green.classList.remove('flashClass')
-// 	red.classList.remove('flashClass')
-// }
-
 
 const userChoice = function (e) {
 	if (e.target === red) {
@@ -129,10 +86,6 @@ const userChoice = function (e) {
 	}
 	console.log(userChoiceArr)
 }
-
-// User Array needs to become new each time !
-
-// let testArray = [1, 1, 1, 1]
 
 const compareChoices = function () {
 	if (userChoiceArr[0] === 0) {
@@ -150,6 +103,32 @@ const userLose = function () {
 	// clear screen entirely
 }
 
+const play_game = function () {
+    
+    var user_succeeded = true;
+    counter = 1;
+
+    while (user_succeeded) {
+        play_round(counter);
+        counter++
+    }
+
+}
+
+const play_round = function (computer_moves) {
+    generateComputerArr_div(computer_moves);
+    for (i = 0; i < computer_moves; i++) {
+        setTimeout(computerPlay_div(i),500);
+    }
+}
 
 
 gameContainer.addEventListener('click', userChoice)
+
+
+
+// checkchoices function 
+
+// )arr1, arr2, 
+
+// checkChoices(gameChoice, playerChoice)
