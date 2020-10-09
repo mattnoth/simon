@@ -44,9 +44,9 @@ console.log(computerChoiceArr)
 
 const computerPlay = function (i) {
     
-    if (i > counter) {
-        return
-    }
+    // if (i > counter) {
+    //     return
+    // }
     
 	if (computerChoiceArr[i] === 0) {
         console.log('yo it should b yellow')
@@ -61,24 +61,24 @@ const computerPlay = function (i) {
         console.log('Yo it should be red')
 		red.classList.add('flashClass')
     } 
-    setTimeout(removeColor, 500, i)
+//     setTimeout(removeColor, 500)
 }
 
-const removeColor = function(i) {
+const removeColor = function() {
     yellow.classList.remove('flashClass')
 	blue.classList.remove('flashClass')
 	green.classList.remove('flashClass')
     red.classList.remove('flashClass')
-    setTimeout(computerPlay, 500, i + 1)
-}
+//     setTimeout(computerPlay, 500)
+ }
 let counter = 10
 
-computerPlay(0)
+// computerPlay(0)
 
-// for (i = 0; i <= counter; i++) {
-// setTimeout(computerPlay, 1000 * i, i)
-// setTimeout(removeColor, 1000 * i + 500)
-// } 
+for (i = 0; i <= counter; i++) {
+setTimeout(computerPlay, 1000 * i, i)
+setTimeout(removeColor, 1000 * i + 500)
+} 
 
 // setTimeout(computerPlay, 2000, 1)
 // setTimeout(removeColor, 2500)
