@@ -83,7 +83,7 @@ const userChoice = function (e) {
 		userChoiceArr.push(1)
 	} else if (e.target === yellow) {
 		userChoiceArr.push(0)
-	}
+	} 
 	console.log(userChoiceArr)
 }
 
