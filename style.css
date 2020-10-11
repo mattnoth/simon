@@ -42,7 +42,7 @@ header {
 	grid-column: 2 / span 1;
 	grid-row: 2 / span 1;
     background-color: white;
-    /* transform: translateY(4%); */
+    transform: translateY(4%);
 }
 
 #blue {
@@ -55,9 +55,9 @@ header {
 	transform: translateY(4%);
 }
 
-#blue:hover {
+/* #blue:hover {
     background-color: white;
-}
+} */
 
 #green {
 	grid-column: 2 / span 1;

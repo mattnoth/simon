@@ -2,133 +2,127 @@ const gameContainer = document.querySelector('.gameContainer')
 
 const yellow = document.getElementById('yellow')
 // 0
-
 const blue = document.getElementById('blue')
 // 1
-
 const green = document.getElementById('green')
 // 2
-
 const red = document.getElementById('red')
 // 3
 
-let userChoiceArr = []
+const button = document.querySelector('.startButton')
+
 let computerChoiceArr = []
 
+let computerTurnCount = 0
+let userClickListens = false
+let userClickCount = 0
+let round = 0
 
+const playSound = function (colorDiv) {
+	let soundFileName = ''
+	switch (colorDiv) {
+		case yellow:
+			soundFileName = 'yellow.mp3'
+			break
+		case blue:
+			soundFileName = 'blue.mp3'
+			break
+		case green:
+			soundFileName = 'green.mp3'
+			break
+		case red:
+			soundFileName = 'red.mp3'
+			break
+		default:
+			soundFileName = 'fail.mp3'
+	}
 
-
-// counter should increment to each
+	let theSound = new Audio(soundFileName)
+	theSound.play()
+	console.log('On Press of ' + soundFileName)
+}
 
 // Create Computer Choice
 const generateComputerArr = function () {
-	for (i = 0; i < 100; i++) {
+	for (i = 0; i < 20; i++) {
 		random = Math.floor(Math.random() * 4)
-		computerChoiceArr.push(random)
+		switch (random) {
+			case 0:
+				computerChoiceArr.push(yellow)
+				break
+			case 1:
+				computerChoiceArr.push(blue)
+				break
+			case 2:
+				computerChoiceArr.push(green)
+				break
+			case 3:
+				computerChoiceArr.push(red)
+		}
 	}
 }
-
-
-generateComputerArr()
-
-
-console.log(computerChoiceArr)
-
-// recursion? change the computer play function to take an i as an argument; which would get rid of the for loop 
 
 const computerPlay = function (i) {
-	if (computerChoiceArr[i] === 0) {
-        console.log('yo it should b yellow')
-        // yellow.classList.add('flashClass')
-        // yellow.setAttribute('id', 'yellow:active')
-        yellow.setAttribute('id', 'yellow')
-        yellow.setAttribute("id", 'yellow:active')
-	} else if (computerChoiceArr[i] === 1) {
-        console.log('yo it should be blue')
-		blue.classList.add('flashClass')
-	} else if (computerChoiceArr[i] === 2) {
-        console.log('yo it should be green')
-		green.classList.add('flashClass')
-	} else if (computerChoiceArr[i] === 3) {
-        console.log('Yo it should be red')
-		red.classList.add('flashClass')
-    } 
+	computerChoiceArr[i].classList.add('flashClass')
+	playSound(computerChoiceArr[i])
 }
 
-const removeColor = function() {
-    yellow.classList.remove('flashClass')
-	blue.classList.remove('flashClass')
-	green.classList.remove('flashClass')
-    red.classList.remove('flashClass')
-    yellow.setAttribute("id", "yellow")
- }
-
-
-
-let counter = 4
-
-for (i = 0; i <= counter; i++) {
-setTimeout(computerPlay, 1000 * i, i)
-setTimeout(removeColor, 1000 * i + 500)
-} 
-
-console.log('im finuto')
+const removeColor = function (i) {
+	computerChoiceArr[i].classList.remove('flashClass')
+	computerTurnCount++
+	if (computerTurnCount > round) {
+		userTurn()
+	} else {
+		setTimeout(computerTurn, 500)
+	}
+}
 
 const userChoice = function (e) {
-	if (e.target === red) {
-		userChoiceArr.push(3)
-	} else if (e.target === green) {
-		userChoiceArr.push(2)
-	} else if (e.target === blue) {
-		userChoiceArr.push(1)
-	} else if (e.target === yellow) {
-		userChoiceArr.push(0)
-	} 
-	console.log(userChoiceArr)
-}
-
-const compareChoices = function () {
-	if (userChoiceArr[0] === 0) {
-		console.log('user chose 0')
+	if (!userClickListens) {
+		alert('not your turn')
+		return
 	}
-	if (userChoiceArr[0] && !computerChoiceArr[0]) {
-		console.log('WRONG')
-	} else if (userChoiceArr[0] && computerChoiceArr[0]) {
-		console.log('RIGHT')
+	if (e.target === computerChoiceArr[userClickCount]) {
+		playSound(e.target)
+		userClickCount++
+		if (userClickCount > round) {
+			round++
+			setTimeout(play_round, 2000)
+		}
+	} else {
+		playSound(null)
+		alert('You lost!,try again!')
+
+		play_game()
 	}
 }
 
-compareChoices()
-const userLose = function () {
-	// clear screen entirely
+const computerTurn = function () {
+	computerPlay(computerTurnCount)
+	setTimeout(removeColor, 500, computerTurnCount)
+}
+
+const userTurn = function () {
+	userClickCount = 0
+	userClickListens = true
+}
+
+const play_round = function () {
+	userClickListens = false
+	computerTurnCount = 0
+	computerTurn()
 }
 
 const play_game = function () {
-    
-    var user_succeeded = true;
-    counter = 1;
+	computerChoiceArr = []
+	userClickListens = false
+	userClickCount = 0
+	round = 0
 
-    while (user_succeeded) {
-        play_round(counter);
-        counter++
-    }
-
+	generateComputerArr()
+	play_round()
 }
-
-const play_round = function (computer_moves) {
-    generateComputerArr_div(computer_moves);
-    for (i = 0; i < computer_moves; i++) {
-        setTimeout(computerPlay_div(i),500);
-    }
-}
-
 
 gameContainer.addEventListener('click', userChoice)
 
-
-
-// checkchoices function 
-
-// )arr1, arr2, 
-
-// checkChoices(gameChoice, playerChoice)
+button.addEventListener('click', play_game)
