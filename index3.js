@@ -12,6 +12,7 @@ const red = document.getElementById('red')
 const gameContainer = document.querySelector('.gameContainer')
 const button = document.querySelector('.startButton')
 const score = document.querySelector('.currentScore')
+const message = document.querySelector('.message')
 
 // declare as 0 index for user & computer move; 
 // declare as 0 round index 
@@ -24,6 +25,8 @@ let userTurn = false
 let userIndex = 0
 let round = 0
 
+button.innerText = "P L A Y"
+
 // meta function: starts brand new game
 // empty gamestate array / div array 
 // set userTurn to false 
@@ -34,7 +37,10 @@ const play = function () {
     divArray = []
     userTurn = false 
     userIndex = 0
-    round = 0
+	round = 0
+	button.innerText = "P L A Y"
+	message.innerText = "Trying..."
+	score.innerText = `${round}`
     createArray()
     startRound()
 }
@@ -102,8 +108,6 @@ const computerAction = function (i) {
 		allowUserTurn()
 	} else {
         setTimeout(computerTurn, 500)
-        playSound(null)
-
     }
 }
 
@@ -124,10 +128,13 @@ const computerTurn = function () {
 const userMove = function (event) {
     console.log(event.target)
     if (!userTurn) {
-		alert('not your turn')
+		// alert('not your turn')
+		message.innerText = "It's not your turn!"
+		button.innerText = "RESET"
 		return
 	}
 	if (event.target === divArray[userIndex]) {
+        playSound(event.target)
 		userIndex++
 		if (userIndex > round) {
             round++
@@ -135,8 +142,9 @@ const userMove = function (event) {
 			setTimeout(startRound, 2000)
 		}
 	} else {
-        playSound(null)
-        score.innerText = `AW bummer, you lost. Your final score was ${round}`
+		playSound(null)
+		message.innerText = `AW bummer, you lost. Your final score was ${round}`
+        // score.innerText = `AW bummer, you lost. Your final score was ${round}`
 	}
 }
 
@@ -170,4 +178,5 @@ const playSound = function (colorDiv) {
 
 gameContainer.addEventListener('click', userMove)
 button.addEventListener('click', play)
-score.innerText = round
+score.innerText = 0
+message.innerText = "Test your memory... how many rounds can you go?" 
