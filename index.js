@@ -11,7 +11,9 @@ const red = document.getElementById('red')
 
 const button = document.querySelector('.startButton')
 
-let computerChoiceArr = []
+
+
+let divArray = []
 
 let computerTurnCount = 0
 let userClickListens = false
@@ -48,27 +50,27 @@ const generateComputerArr = function () {
 		random = Math.floor(Math.random() * 4)
 		switch (random) {
 			case 0:
-				computerChoiceArr.push(yellow)
+				divArray.push(yellow)
 				break
 			case 1:
-				computerChoiceArr.push(blue)
+				divArray.push(blue)
 				break
 			case 2:
-				computerChoiceArr.push(green)
+				divArray.push(green)
 				break
 			case 3:
-				computerChoiceArr.push(red)
+				divArray.push(red)
 		}
 	}
 }
 
 const computerPlay = function (i) {
-	computerChoiceArr[i].classList.add('flashClass')
-	playSound(computerChoiceArr[i])
+	divArray[i].classList.add('flashClass')
+	playSound(divArray[i])
 }
 
 const removeColor = function (i) {
-	computerChoiceArr[i].classList.remove('flashClass')
+	divArray[i].classList.remove('flashClass')
 	computerTurnCount++
 	if (computerTurnCount > round) {
 		userTurn()
@@ -82,18 +84,20 @@ const userChoice = function (e) {
 		alert('not your turn')
 		return
 	}
-	if (e.target === computerChoiceArr[userClickCount]) {
+	if (e.target === divArray[userClickCount]) {
 		playSound(e.target)
+		
 		userClickCount++
 		if (userClickCount > round) {
 			round++
+			score.innerText = round
 			setTimeout(play_round, 2000)
 		}
 	} else {
 		playSound(null)
-		alert('You lost!,try again!')
-
-		play_game()
+		// alert('You lost!,try again!')
+		score.innerText = `Your final score is ${score}. Try again!`
+		// setTimeplay_game()
 	}
 }
 
@@ -114,7 +118,7 @@ const play_round = function () {
 }
 
 const play_game = function () {
-	computerChoiceArr = []
+	divArray = []
 	userClickListens = false
 	userClickCount = 0
 	round = 0
@@ -126,3 +130,7 @@ const play_game = function () {
 gameContainer.addEventListener('click', userChoice)
 
 button.addEventListener('click', play_game)
+
+const score = document.querySelector('.currentScore')
+
+score.innerText = round
