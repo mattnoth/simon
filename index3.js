@@ -94,6 +94,7 @@ const createArray = function () {
 // passes i from for loop 
 
 const computerPlay = function (i) {
+	message.innerText = "Computer Playing..."
 	divArray[i].classList.add('flashClass')
     playSound(divArray[i])
 }
@@ -106,6 +107,7 @@ const computerAction = function (i) {
 	computerIndex++
 	if (computerIndex > round) {
 		allowUserTurn()
+		message.innerText = "It's your turn!"
 	} else {
         setTimeout(computerTurn, 500)
     }
@@ -134,12 +136,16 @@ const userMove = function (event) {
 		return
 	}
 	if (event.target === divArray[userIndex]) {
+		message.innerText = "It's your turn!"
         playSound(event.target)
 		userIndex++
 		if (userIndex > round) {
             round++
             score.innerText = round
 			setTimeout(startRound, 2000)
+		}
+		if (userIndex > 5) {
+			message.innerText = "Wow you're pretty good!"
 		}
 	} else {
 		playSound(null)
