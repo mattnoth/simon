@@ -9,15 +9,13 @@ class simon_game {
 		this.button = document.querySelector('.startButton')
 		this.score = document.querySelector('.currentScore')
 		this.message = document.querySelector('.message')
-		this.dictionary = 
-		{
+		this.dictionary = {
 			0: 'Yellow',
 			1: 'Blue',
 			2: 'Green',
 			3: 'Red',
 		}
-		this.sounds = 
-		{
+		this.sounds = {
 			0: 'yellow.mp3',
 			1: 'blue.mp3',
 			2: 'green.mp3',
@@ -95,7 +93,6 @@ class simon_game {
 		}
 		if (userInputNum === this.positionArray[this.userIndex]) {
 			this.message.innerText = "It's your turn!"
-			console.log(event)
 			this.playSound(userInputNum)
 			this.userIndex++
 			if (this.userIndex > this.round) {
@@ -108,10 +105,10 @@ class simon_game {
 			}
 		} else {
 			this.playSound(null)
-			this.message.innerText = `AW bummer, you lost. Your final score was ${round}. You picked ${
-				dictionary[userInputNum]
+			this.message.innerText = `AW bummer, you lost. Your final score was ${this.round}. You picked ${
+				this.dictionary[userInputNum]
 			}, when you should have picked ${
-				dictionary[this.positionArray[this.userIndex]]
+				this.dictionary[this.positionArray[this.userIndex]]
 			}.`
 			this.button.innerText = 'RESET'
 		}
