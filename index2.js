@@ -25,9 +25,9 @@ class simon_game {
 	}
 
 	createArray() {
-		for (this.i = 0; this.i < 20; this.i++) {
-			this.random = Math.floor(Math.random() * 4)
-			switch (this.random) {
+		for (let i = 0; this.i < 20; this.i++) {
+			random = Math.floor(Math.random() * 4)
+			switch (random) {
 				case 0:
 					this.divArray.push(yellow)
 					break
