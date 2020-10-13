@@ -121,3 +121,4 @@ class simon_game {
 }
 
 let playSimon = new simon_game()
+
