@@ -28,6 +28,9 @@ class simon_game {
 		this.button.addEventListener('click', this.play.bind(this))
 	}
 
+	// meta function connected to play button; resets game state
+	// resets positional array; counters, and turns off Userturn
+
 	play() {
 		this.positionArray = []
 		this.userTurn = false
@@ -40,16 +43,23 @@ class simon_game {
 		this.startRound()
 	}
 
+	// game is broken into 'rounds', consisting of a computer move
+	// and a user response move; userTurn is set to false, computer index
+	// is set to zero; comuputer Index keeps track of where it is in the array
+
 	startRound() {
 		this.userTurn = false
 		this.computerIndex = 0
 		this.computerTurn()
 	}
 
+	// simple function to call that resets the userIndex and sets userTurn to true
+
 	allowUserTurn() {
 		this.userIndex = 0
 		this.userTurn = true
 	}
+	// create the gamestate array using 4 random numbers
 
 	createArray() {
 		for (let i = 0; i < 20; i++) {
@@ -58,15 +68,33 @@ class simon_game {
 		}
 	}
 
+	// each div has a data-num attached to it that corresponds to the color dictionary
+
 	findDiv(position) {
 		return document.querySelectorAll(`[data-num='${position}'`)[0]
 	}
+	
+	// controls computer turn; ping pongs between computer play and computer action until its position in the array is equal to the round 
+	// settime out is drawn for computer action, to remove the flashclass
+	// half a second after it is added 
+	// binds scope of this 
+
+	computerTurn() {
+		this.computerPlay(this.computerIndex)
+		setTimeout(this.computerAction.bind(this), 500, this.computerIndex)
+	}
+
+	// computer uses findDiv to add the flashclass to the current positin in the array; positionArray[i] gets passed as the position argument in finddiv 
 
 	computerPlay(i) {
 		this.message.innerText = 'Computer Playing...'
 		this.findDiv(this.positionArray[i]).classList.add('flashClass')
 		this.playSound(this.positionArray[i])
 	}
+
+	// removes the flash class; increases computer index, which is the counter for where the computer is in the array 
+	// if computerindex surpasses round, its time for the uesr turn 
+
 
 	computerAction(i) {
 		this.findDiv(this.positionArray[i]).classList.remove('flashClass')
@@ -79,10 +107,12 @@ class simon_game {
 		}
 	}
 
-	computerTurn() {
-		this.computerPlay(this.computerIndex)
-		setTimeout(this.computerAction.bind(this), 500, this.computerIndex)
-	}
+	// define userinput num, which turns the event click into a number, that coorespondeds to the color dictionary 
+	// checks, if not user turn, alerts user 
+	// then checks to see if the user hit the correct button
+	// user index keeps track of where the user is in the array 
+	// user index increments with each succes 
+	// if user index surpasses round, round increases, and a timeout is set to start the new round! 
 
 	userMove(event) {
 		let userInputNum = Number(event.target.dataset.num)
@@ -105,7 +135,9 @@ class simon_game {
 			}
 		} else {
 			this.playSound(null)
-			this.message.innerText = `AW bummer, you lost. Your final score was ${this.round}. You picked ${
+			this.message.innerText = `AW bummer, you lost. Your final score was ${
+				this.round
+			}. You picked ${
 				this.dictionary[userInputNum]
 			}, when you should have picked ${
 				this.dictionary[this.positionArray[this.userIndex]]
